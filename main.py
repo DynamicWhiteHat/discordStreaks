@@ -3,17 +3,23 @@ from discord.ext import commands
 from typing import Final
 import os
 from dotenv import load_dotenv
-from database import checkstreak, get, reset 
+from database import checkstreak, get
+import datetime
 
+#streak_keyword: sets the word that must be typed in a channel to update the streak
+#OPTIONAL: streak_time sets the time for a streak keyword to be effective. Use 24 hour format, if none type None
+
+streak_keyword = "422"
+streak_time = None
 
 load_dotenv()
 TOKEN: Final[str] = os.getenv("DISCORD_TOKEN")
+now = datetime.datetime.now()
 
 # Set up intents and bot
 intents: Intents = Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="", intents=intents)
-
 
 # Register commands
 streak_group = app_commands.Group(name="streak", description="Commands related to streaks")
@@ -63,7 +69,6 @@ async def top_streaks(interaction: Interaction):
        message += "🥉: **" + tName[0] + "** with a streak of **" + str(tHigh[0]) + "** days! \n"
     await interaction.response.send_message(message)
 
-
 @streak_group.command(name="best", description="Type a username to see their best streak!") #DONE
 async def streak_best(interaction: Interaction, username: str):
     c= get(username, 3)
@@ -105,11 +110,17 @@ bot.tree.add_command(streak_group)
 
 @bot.event
 async def on_message(message: Message):
-    if message.author == bot.user:
-        return
-
-    if message.content.lower() == "422":
-        checkstreak(str(message.author))
+    if streak_time != None:
+        if now.strftime("%H:%M") == streak_time:
+            if message.author == bot.user: # Prevent the bot from responding to itself
+                return
+            if message.content.lower() == streak_keyword: # Check for streak keyword
+                checkstreak(str(message.author))
+    else:
+        if message.author == bot.user: # Prevent the bot from responding to itself
+                return
+        if message.content.lower() == streak_keyword: # Check for streak keyword
+                checkstreak(str(message.author))
 
 # Sync the commands globally
 @bot.event

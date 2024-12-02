@@ -1,5 +1,5 @@
 import sqlite3
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 conn = sqlite3.connect('streaks.db')
@@ -44,7 +44,7 @@ def checkstreak(username):
         elif (today-last_update).days > 1: 
             set_streak(username, 0)
         elif (today-last_update).days == 0:
-            print("pdayt")
+            print("already updated for today")
     else:
         add_user(username)
 def get(username, type):
