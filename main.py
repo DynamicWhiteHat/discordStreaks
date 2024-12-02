@@ -9,7 +9,7 @@ import datetime
 #streak_keyword: sets the word that must be typed in a channel to update the streak
 #OPTIONAL: streak_time sets the time for a streak keyword to be effective. Use 24 hour format, if none type None
 
-streak_keyword = "422"
+streak_keyword = "KEYWORD"
 streak_time = None
 
 load_dotenv()
