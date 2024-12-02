@@ -1,0 +1,2 @@
+# Requires Python >= 3.5 for typing support
+discord.py>=2.3.2 
