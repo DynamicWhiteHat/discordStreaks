@@ -1,6 +1,12 @@
 # Discord Streaks
  Discord bot that has various commands useful in keeping streaks for servers. Stores information safely in a SQLite database. 100% written in Python.
- 
+
+
+
+https://github.com/user-attachments/assets/fc8ee8da-f5c3-42e6-b6f8-98d55f5fe36a
+
+
+
 **Commands:**
 - **/streak current:** Displays the current streak of a user
 - **/streak leaders:** Displays the server's top 3 current streaks
